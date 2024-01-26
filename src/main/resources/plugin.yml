@@ -50,4 +50,6 @@ permissions:
     default: op
   fudzieco.commmand:
     default: op
+  fudzieco.reload:
+    default: op
 
