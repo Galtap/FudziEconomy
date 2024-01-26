@@ -1,0 +1,42 @@
+Auto-save: 60
+Start-balance: 0
+First-balance-name: "{PLAYER_NAME}"
+Max-pay: 1000000
+Min-pay: 1
+
+Item-money:
+  BRONZE:
+    material: LEATHER
+    name: "бронзовая монета"
+    lore:
+      - "бронзовая монета"
+      - "1 монета это - 1 FudziCoins"
+    convert-to: 1
+
+  SLIVER:
+    material: IRON_INGOT
+    name: "серебряная монета"
+    lore:
+      - "серебряная монета"
+      - "1 монета это - 10 FudziCoins"
+    convert-to: 10
+
+  GOLD:
+    material: GOLD_INGOT
+    name: "золотая монета"
+    lore:
+      - "золотая монета"
+      - "1 монета это - 100 FudziCoins"
+    convert-to: 100
+
+  PLATINUM:
+    material: DIAMOND
+    name: "платиновая монета"
+    lore:
+      - "платиновая монета"
+      - "1 монета это - 1000 FudziCoins"
+    convert-to: 1000
+
+
+
+

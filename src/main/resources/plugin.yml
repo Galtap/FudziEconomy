@@ -1,0 +1,53 @@
+name: FudziEconomy
+version: '${project.version}'
+main: me.galtap.fudzieconomy.FudziEconomy
+commands:
+  fudzieco:
+    permission: fudzieco.command
+    description: "команда для настроек плагина, управления счетами игроков и тд"
+  fudzimoney:
+    permission: fudzimoney.command
+    description: "команда для общих функций"
+
+permissions:
+  fudzieco.balance.create:
+    description: "Позволяет игроку использовать команду /fudzieco balance create"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzieco.balance.delete:
+    description: "Позволяет игроку использовать команду /fudzieco balance delete"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzieco.money.give:
+    description: "Позволяет игроку использовать команду /fudzieco money give"
+    default: op # Установка значения умолчания (например, op для операторов сервера)
+  fudzieco.money.remove:
+    description: "Позволяет игроку использовать команду /fudzieco money remove"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzieco.money.set:
+    description: "Позволяет игроку использовать команду /fudzieco money set"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzieco.info:
+    description: "Позволяет игроку использовать команду /fudzieco info"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzieco.help:
+    description: "Позволяет игроку использовать команду /fudzieco help"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzieco.allmoney:
+    description: "Позволяет игроку использовать команду /fudzieco allmoney"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzimoney.pay:
+    description: "Позволяет игроку использовать команду /fudzimoney pay"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzimoney.translation:
+    description: "Позволяет игроку использовать команду /fudzimoney translation"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzimoney.conclusion:
+    description: "Позволяет игроку использовать команду /fudzimoney conclusion"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzimoney.help:
+    description: "Позволяет игроку использовать команду /fudzimoney help"
+    default: op # Установка значения по умолчанию (например, op для операторов сервера)
+  fudzimoney.command:
+    default: op
+  fudzieco.commmand:
+    default: op
+

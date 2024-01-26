@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="FudziEconomy:jar">
+    <output-path>$PROJECT_DIR$/../../../локальные сервера/сервер 1.12.2/plugins</output-path>
+    <root id="archive" name="FudziEconomy.jar">
+      <element id="module-output" name="FudziEconomy" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/jetbrains/annotations/24.0.1/annotations-24.0.1.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
