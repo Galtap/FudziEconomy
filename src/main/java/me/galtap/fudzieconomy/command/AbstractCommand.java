@@ -1,6 +1,5 @@
 package me.galtap.fudzieconomy.command;
 
-import com.sun.istack.internal.NotNull;
 import me.galtap.fudzieconomy.command.subcommand.ConsoleSubCommand;
 import me.galtap.fudzieconomy.command.subcommand.PlayerSubCommand;
 import me.galtap.fudzieconomy.command.subcommand.SubCommand;
@@ -13,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 import java.util.Map;

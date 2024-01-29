@@ -5,8 +5,6 @@ o
 ?src/main/java/me/galtap/fudzieconomy/config/StandardConfig.java,0\1\01ee0b0ff55eea4c60fe29fa402ec273e9a65c68
 j
 :src/main/java/me/galtap/fudzieconomy/utill/SimpleUtil.java,3\d\3dd6584679de002cdf068533c4b401e6270cc240
-k
-;src/main/java/me/galtap/fudzieconomy/utill/ErrorHandle.java,a\f\afe25a2eebc1398440166bd915c685f755f53b27
 e
 5src/main/java/me/galtap/fudzieconomy/utill/Debug.java,9\e\9e26b081322309552bdb7e14b9fb80e5f85f9dc3
 o
