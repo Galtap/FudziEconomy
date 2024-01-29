@@ -35,17 +35,17 @@ public class FudziEconomyCMD extends AbstractCommand {
     public void execute(CommandSender sender, String label, String[] args) {
         MessagesConfig messagesConfig = configManager.getMessagesConfig();
         if(args.length == 0){
-            messagesConfig.getError_arguments().forEach(sender::sendMessage);
+            SimpleUtil.sendMessage(sender,messagesConfig.getError_arguments());
             return;
         }
         if(args.length == 1 && args[0].equalsIgnoreCase("help")){
             if(SimpleUtil.notHasPermission(sender,"fudzieco.help",messagesConfig)) return;
-            messagesConfig.getFudziecoHelpCommand().forEach(sender::sendMessage);
+            SimpleUtil.sendMessage(sender,messagesConfig.getFudziecoHelpCommand());
             return;
         }
         if(args.length == 1 && args[0].equalsIgnoreCase("allmoney")){
             if(SimpleUtil.notHasPermission(sender,"fudzieco.allmoney",messagesConfig)) return;
-            SimpleUtil.replacePlaceholders("{BALANCE}",messagesConfig.getTotal_money(),String.valueOf(economyManager.giveTotalMoney())).forEach(sender::sendMessage);
+            SimpleUtil.sendMessage(sender,messagesConfig.getTotal_money(),"{BALANCE}",String.valueOf(economyManager.giveTotalMoney()));
             return;
         }
         if(args.length == 1 && args[0].equalsIgnoreCase("reload")){

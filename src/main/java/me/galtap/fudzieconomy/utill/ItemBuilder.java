@@ -9,27 +9,29 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.*;
 
 public class ItemBuilder {
-    private Material material;
+    private final Material material;
     private String displayName;
     private final List<String> lore = new ArrayList<>();
     private final Map<Enchantment,Integer> unsafeEnchantments =  new HashMap<>();
 
-
-    public void setMaterial(Material material) {
+    public ItemBuilder(Material material){
         this.material = material;
     }
 
 
-    public void setDisplayName(String displayName) {
+    public ItemBuilder setDisplayName(String displayName) {
         this.displayName = displayName;
+        return this;
     }
 
-    public void setLore(List<String> lore) {
+    public ItemBuilder setLore(List<String> lore) {
         this.lore.addAll(lore);
+        return this;
     }
 
-    public void setUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
+    public ItemBuilder setUnsafeEnchantments(Map<Enchantment, Integer> enchantments) {
         this.unsafeEnchantments.putAll(enchantments);
+        return this;
     }
 
 
@@ -51,18 +53,5 @@ public class ItemBuilder {
         itemStack.setItemMeta(meta);
         itemStack.addUnsafeEnchantments(unsafeEnchantments);
         return itemStack;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItemBuilder that = (ItemBuilder) o;
-        return material == that.material && Objects.equals(displayName, that.displayName) && Objects.equals(lore, that.lore) && Objects.equals(unsafeEnchantments, that.unsafeEnchantments);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(material, displayName, lore, unsafeEnchantments);
     }
 }

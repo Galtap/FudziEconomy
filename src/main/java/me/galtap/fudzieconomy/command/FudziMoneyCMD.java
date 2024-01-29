@@ -57,7 +57,7 @@ public class FudziMoneyCMD extends AbstractCommand{
         }
         if(args.length == 1 && args[0].equalsIgnoreCase("help")){
             if(SimpleUtil.notHasPermission(sender,"fudzimoney.help",messagesConfig)) return;
-            messagesConfig.getFudzimoney_help().forEach(sender::sendMessage);
+            SimpleUtil.sendMessage(sender,messagesConfig.getFudzimoney_help());
             return;
         }
 

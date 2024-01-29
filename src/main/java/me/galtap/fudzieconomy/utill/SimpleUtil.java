@@ -38,6 +38,14 @@ public final class SimpleUtil {
     public static List<String> replacePlaceholders(String placeholder, List<String> text, String value) {
         return text.stream().map(s -> s.replace(placeholder, value)).collect(Collectors.toList());
     }
+    public static void sendMessage(CommandSender sender, List<String> text, String placeholder, String value){
+        if(sender == null || text == null || placeholder == null || value == null) return;
+        replacePlaceholders(placeholder,text,value).forEach(sender::sendMessage);
+    }
+    public static void sendMessage(CommandSender sender, List<String> text){
+        if(sender == null || text == null) return;
+        text.forEach(sender::sendMessage);
+    }
     public static Integer parseInt(String value, MessagesConfig messagesConfig, CommandSender sender) {
         try {
             return Integer.parseInt(value);

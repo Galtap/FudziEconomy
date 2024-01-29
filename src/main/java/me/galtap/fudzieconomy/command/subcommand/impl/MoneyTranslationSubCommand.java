@@ -26,31 +26,31 @@ public class MoneyTranslationSubCommand implements PlayerSubCommand {
     public void perform(@NotNull Player player, @NotNull String[] args) {
         MessagesConfig messagesConfig = configManager.getMessagesConfig();
         if(args.length != 4){
-            messagesConfig.getError_arguments().forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getError_arguments());
             return;
         }
         try {
             String accountName = args[3];
             BalanceAccount balanceAccount = economyManager.getBalanceAccount(player.getUniqueId(),accountName);
             if(balanceAccount == null){
-                SimpleUtil.replacePlaceholders("{ACCOUNT_NAME}",messagesConfig.getBalance_not_exists(),accountName);
+                SimpleUtil.sendMessage(player,messagesConfig.getBalance_not_exists(),"{ACCOUNT_NAME}",accountName);
                 return;
             }
             ItemMoneyType itemMoneyType = ItemMoneyType.valueOf(args[1].toUpperCase(Locale.ENGLISH));
             int count = Integer.parseInt(args[2]);
             int virtualMoney = economyManager.convertToVirtual(itemMoneyType,count,player.getUniqueId());
             if(virtualMoney == 0){
-                messagesConfig.getError_arguments().forEach(player::sendMessage);
+                SimpleUtil.sendMessage(player,messagesConfig.getError_arguments());
                 return;
             }
             if(virtualMoney == -1){
-                messagesConfig.getConverting_to_virtual_error().forEach(player::sendMessage);
+                SimpleUtil.sendMessage(player,messagesConfig.getConverting_to_virtual_error());
                 return;
             }
             balanceAccount.addMoney(virtualMoney);
-            messagesConfig.getConverted_to_virtual().forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getConverted_to_virtual());
         }catch (IllegalArgumentException e){
-            messagesConfig.getError_arguments().forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getError_arguments());
         }
     }
 

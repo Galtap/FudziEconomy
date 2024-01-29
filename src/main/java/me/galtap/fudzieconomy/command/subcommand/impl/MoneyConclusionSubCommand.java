@@ -32,7 +32,7 @@ public class MoneyConclusionSubCommand implements PlayerSubCommand {
         String accountName = args[3];
         BalanceAccount balanceAccount = economyManager.getBalanceAccount(player.getUniqueId(),accountName);
         if(balanceAccount == null){
-            SimpleUtil.replacePlaceholders("{ACCOUNT_NAME}",messagesConfig.getBalance_not_exists(),accountName);
+            SimpleUtil.sendMessage(player,messagesConfig.getBalance_not_exists(),"{ACCOUNT_NAME}",accountName);
             return;
         }
         try {
@@ -40,7 +40,7 @@ public class MoneyConclusionSubCommand implements PlayerSubCommand {
             int count = Integer.parseInt(args[2]);
             economyManager.convertToItemMoney(itemMoneyType,count,balanceAccount,player);
         }catch (IllegalArgumentException e){
-            messagesConfig.getError_arguments().forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getError_arguments());
             e.printStackTrace();
         }
     }

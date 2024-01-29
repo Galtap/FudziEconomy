@@ -31,17 +31,17 @@ public class PayMoneySubCommand implements PlayerSubCommand {
         if(SimpleUtil.notHasPermission(player,"fudzimoney.money.pay",messagesConfig)) return;
         Player target = Bukkit.getPlayer(args[1]);
         if(target == null){
-            messagesConfig.getPlayer_not_online().forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getPlayer_not_online());
             return;
         }
         BalanceAccount yourAccount = economyManager.getBalanceAccount(player.getUniqueId(),args[2]);
         if(yourAccount == null){
-            SimpleUtil.replacePlaceholders("{ACCOUNT_NAME}",messagesConfig.getBalance_not_exists(),args[2]);
+            SimpleUtil.sendMessage(player,messagesConfig.getBalance_not_exists(),"{ACCOUNT_NAME}",args[2]);
             return;
         }
         BalanceAccount targetAccount = economyManager.getBalanceAccount(target.getUniqueId(),args[3]);
         if(targetAccount == null){
-            SimpleUtil.replacePlaceholders("{ACCOUNT_NAME}",messagesConfig.getBalance_not_exists(),args[3]);
+            SimpleUtil.sendMessage(player,messagesConfig.getBalance_not_exists(),"{ACCOUNT_NAME}",args[3]);
             return;
         }
         Integer count = SimpleUtil.parseInt(args[4],messagesConfig,player);
@@ -49,16 +49,16 @@ public class PayMoneySubCommand implements PlayerSubCommand {
 
         StandardConfig standardConfig = configManager.getStandardConfig();
         if(count > standardConfig.getMaxPay() || count < standardConfig.getMinPay()){
-            messagesConfig.getMoney_pay_limit().forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getMoney_pay_limit());
             return;
         }
         if(yourAccount.getBalance() < count){
-            messagesConfig.getSmall_money().forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getSmall_money());
             return;
         }
         yourAccount.subtractMoney(count);
         targetAccount.addMoney(count);
-        messagesConfig.getMoney_pay().forEach(player::sendMessage);
+        SimpleUtil.sendMessage(player,messagesConfig.getMoney_pay());
     }
 
     @Override

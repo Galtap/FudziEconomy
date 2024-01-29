@@ -52,29 +52,29 @@ public class EconomyBalanceSubCommand implements ConsoleSubCommand {
     private void createBalance(String playerName, CommandSender sender, MessagesConfig messagesConfig, String accountName, int startBalance) {
         Player player = Bukkit.getPlayer(playerName);
         if (player == null) {
-            messagesConfig.getPlayer_not_online().forEach(sender::sendMessage);
+            SimpleUtil.sendMessage(sender,messagesConfig.getPlayer_not_online());
             return;
         }
         if (economyManager.balanceAccountExists(player.getUniqueId(), accountName)) {
-            SimpleUtil.replacePlaceholders("{ACCOUNT_NAME}",messagesConfig.getBalance_exists(),accountName).forEach(sender::sendMessage);
+            SimpleUtil.sendMessage(sender,messagesConfig.getBalance_exists(),"{ACCOUNT_NAME}",accountName);
             return;
         }
         economyManager.createBalanceAccount(player.getUniqueId(), accountName, startBalance);
-        SimpleUtil.replacePlaceholders("{BALANCE}", messagesConfig.getBalance_created(), String.valueOf(startBalance)).forEach(sender::sendMessage);
+        SimpleUtil.sendMessage(sender,messagesConfig.getBalance_created(),"{BALANCE}",String.valueOf(startBalance));
     }
 
     private void deleteBalance(String playerName, CommandSender sender, MessagesConfig messagesConfig, String accountName) {
         Player player = Bukkit.getPlayer(playerName);
         if (player == null) {
-            messagesConfig.getPlayer_not_online().forEach(sender::sendMessage);
+            SimpleUtil.sendMessage(sender,messagesConfig.getPlayer_not_online());
             return;
         }
         if (!economyManager.balanceAccountExists(player.getUniqueId(), accountName)) {
-            SimpleUtil.replacePlaceholders("{ACCOUNT_NAME}",messagesConfig.getBalance_not_exists(),accountName);
+            SimpleUtil.sendMessage(sender,messagesConfig.getBalance_not_exists(),"{ACCOUNT_NAME}",accountName);
             return;
         }
         economyManager.removeBalanceAccount(player.getUniqueId(), accountName);
-        messagesConfig.getBalance_deleted().forEach(sender::sendMessage);
+        SimpleUtil.sendMessage(sender,messagesConfig.getBalance_deleted());
     }
 
 

@@ -4,10 +4,10 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import java.util.Locale;
 
-public class ErrorHandle {
+public class ErrorHandler {
     private final String configName;
 
-    public ErrorHandle(String configName){
+    public ErrorHandler(String configName){
         this.configName = configName;
     }
 

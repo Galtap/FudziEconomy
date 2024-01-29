@@ -29,7 +29,7 @@ public class MoneySubCommand implements ConsoleSubCommand {
         if (args.length == 5) {
             String action = args[1].toLowerCase(Locale.ENGLISH);
             if (!action.equalsIgnoreCase("give") && !action.equalsIgnoreCase("remove") && !action.equalsIgnoreCase("set")) {
-                messagesConfig.getError_arguments().forEach(sender::sendMessage);
+                SimpleUtil.sendMessage(sender,messagesConfig.getError_arguments());
                 return;
             }
             action = action.toLowerCase(Locale.ENGLISH);
@@ -37,20 +37,20 @@ public class MoneySubCommand implements ConsoleSubCommand {
 
             processCommand(args[2], args[3], args[4], sender, messagesConfig, action);
         } else {
-            messagesConfig.getError_arguments().forEach(sender::sendMessage);
+            SimpleUtil.sendMessage(sender,messagesConfig.getError_arguments());
         }
     }
 
     private void processCommand(String playerName, String accountName, String countString, CommandSender sender, MessagesConfig messagesConfig, String subCommandType) {
         Player player = Bukkit.getPlayer(playerName);
         if (player == null) {
-            messagesConfig.getPlayer_not_online().forEach(sender::sendMessage);
+            SimpleUtil.sendMessage(sender,messagesConfig.getPlayer_not_online());
             return;
         }
 
         BalanceAccount balanceAccount = economyManager.getBalanceAccount(player.getUniqueId(), accountName);
         if (balanceAccount == null) {
-            SimpleUtil.replacePlaceholders("{ACCOUNT_NAME}", messagesConfig.getBalance_not_exists(), accountName);
+            SimpleUtil.sendMessage(sender,messagesConfig.getBalance_not_exists(),"{ACCOUNT_NAME}",accountName);
             return;
         }
 
@@ -60,18 +60,18 @@ public class MoneySubCommand implements ConsoleSubCommand {
         switch (subCommandType.toLowerCase(Locale.ENGLISH)) {
             case "give":
                 balanceAccount.addMoney(count);
-                messagesConfig.getMoney_pay().forEach(sender::sendMessage);
+                SimpleUtil.sendMessage(sender,messagesConfig.getMoney_pay());
                 break;
             case "remove":
                 balanceAccount.subtractMoney(count);
-                messagesConfig.getMoney_removed().forEach(sender::sendMessage);
+                SimpleUtil.sendMessage(sender,messagesConfig.getMoney_removed());
                 break;
             case "set":
                 balanceAccount.setMoney(count);
-                messagesConfig.getMoney_set().forEach(sender::sendMessage);
+                SimpleUtil.sendMessage(sender,messagesConfig.getMoney_set());
                 break;
             default:
-                messagesConfig.getError_arguments().forEach(sender::sendMessage);
+                SimpleUtil.sendMessage(sender,messagesConfig.getError_arguments());
         }
     }
 

@@ -6,6 +6,7 @@ import me.galtap.fudzieconomy.command.subcommand.PlayerSubCommand;
 import me.galtap.fudzieconomy.command.subcommand.SubCommand;
 import me.galtap.fudzieconomy.command.subcommand.SubCommandType;
 import me.galtap.fudzieconomy.config.MessagesConfig;
+import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -47,7 +48,7 @@ public abstract class AbstractCommand implements CommandExecutor {
             consoleSubCommand.perform(sender,args);
             return;
         }
-        messagesConfig.getError_arguments().forEach(sender::sendMessage);
+        SimpleUtil.sendMessage(sender,messagesConfig.getError_arguments());
     }
 
 }

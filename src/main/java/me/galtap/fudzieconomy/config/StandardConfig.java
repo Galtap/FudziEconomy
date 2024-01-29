@@ -3,7 +3,7 @@ package me.galtap.fudzieconomy.config;
 import me.galtap.fudzieconomy.model.ItemMoney;
 import me.galtap.fudzieconomy.model.ItemMoneyType;
 import me.galtap.fudzieconomy.utill.Debug;
-import me.galtap.fudzieconomy.utill.ErrorHandle;
+import me.galtap.fudzieconomy.utill.ErrorHandler;
 import me.galtap.fudzieconomy.utill.ItemBuilder;
 import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.Material;
@@ -16,7 +16,7 @@ import java.util.*;
 import java.util.logging.Level;
 
 public class StandardConfig {
-    private final ErrorHandle errorHandle;
+    private final ErrorHandler errorHandler;
     private int autoSaveTime;
     private final int startBalance;
     private final String firstBalanceName;
@@ -31,13 +31,13 @@ public class StandardConfig {
 
     public StandardConfig(JavaPlugin plugin) {
         ConfigurationSection section = plugin.getConfig();
-        errorHandle = new ErrorHandle("config.yml");
+        errorHandler = new ErrorHandler("config.yml");
 
-        autoSaveTime = errorHandle.checkInt(section, 60, "Auto-save", -1);
+        autoSaveTime = errorHandler.checkInt(section, 60, "Auto-save", -1);
         startBalance = section.getInt("Start-balance",0);
         firstBalanceName = SimpleUtil.getColorText(section.getString("First-balance-name","{PLAYER_NAME}"));
-        maxPay = errorHandle.checkInt(section,10_000_000,"Max-pay",-1);
-        minPay = errorHandle.checkInt(section,1,"Min-pay",-1);
+        maxPay = errorHandler.checkInt(section,10_000_000,"Max-pay",-1);
+        minPay = errorHandler.checkInt(section,1,"Min-pay",-1);
         if (autoSaveTime < 1) autoSaveTime = 60;
         moneyTypes = new EnumMap<>(ItemMoneyType.class);
 
@@ -50,12 +50,12 @@ public class StandardConfig {
     private ItemMoney loadMoneyInfo(ConfigurationSection section, ItemMoneyType itemMoneyType) {
         ConfigurationSection typeSection = SimpleUtil.createSectionIfNotExists(section, "Item-money."+itemMoneyType.name());
         ItemStack itemStack = loadMoneyMeta(typeSection);
-        int convertTo = errorHandle.checkInt(typeSection, 1, "convert-to", -1);
+        int convertTo = errorHandler.checkInt(typeSection, 1, "convert-to", -1);
         return new ItemMoney(itemStack, convertTo, itemMoneyType);
     }
 
     private ItemStack loadMoneyMeta(ConfigurationSection typeSection) {
-        Material material = errorHandle.checkEnum(Material.class, typeSection, Material.BARRIER, MATERIAL_PATH);
+        Material material = errorHandler.checkEnum(Material.class, typeSection, Material.BARRIER, MATERIAL_PATH);
         String name = typeSection.getString(NAME_PATH);
         List<String> lore = new ArrayList<>(typeSection.getStringList(LORE_PATH));
         Map<Enchantment, Integer> enchantments = new HashMap<>();
@@ -69,7 +69,7 @@ public class StandardConfig {
                 continue;
             }
 
-            int level = errorHandle.checkInt(enchantmentSection, 0, typeName, -1);
+            int level = errorHandler.checkInt(enchantmentSection, 0, typeName, -1);
             if (level < 1) {
                 Debug.customLog("Invalid enchantment level in config.yml. Path: " + enchantmentSection.getCurrentPath(), Level.SEVERE);
                 continue;
@@ -78,12 +78,11 @@ public class StandardConfig {
             enchantments.put(enchantment, level);
         }
 
-        ItemBuilder itemBuilder = new ItemBuilder();
-        itemBuilder.setMaterial(material);
-        itemBuilder.setLore(lore);
-        itemBuilder.setUnsafeEnchantments(enchantments);
-        itemBuilder.setDisplayName(name);
-        return itemBuilder.build();
+        return new ItemBuilder(material)
+                .setDisplayName(name)
+                .setLore(lore)
+                .setUnsafeEnchantments(enchantments)
+                .build();
     }
 
 

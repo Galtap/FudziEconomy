@@ -62,13 +62,13 @@ public class EconomyManager {
     public void convertToItemMoney(ItemMoneyType itemMoneyType, int itemAmount, BalanceAccount balanceAccount, Player player){
         MessagesConfig messagesConfig = configManager.getMessagesConfig();
         if(validateArguments(itemMoneyType,balanceAccount) || itemAmount < 1){
-            messagesConfig.getError_arguments().forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getError_arguments());
             return;
         }
 
         ItemMoney itemMoney = configManager.getStandardConfig().getItemMoney(itemMoneyType);
         if(itemMoney == null){
-            messagesConfig.getError_arguments().forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getError_arguments());
             return;
         }
 
@@ -76,7 +76,7 @@ public class EconomyManager {
         int removeMoneyCount = itemAmount*itemMoney.getConvertToVirtualValue();
 
         if(balance < removeMoneyCount){
-            messagesConfig.getConverting_to_real_error().forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getConverting_to_real_error());
             return;
         }
         List<ItemStack> items = new ArrayList<>();
@@ -87,7 +87,7 @@ public class EconomyManager {
             if(SimpleUtil.canFitInInventory(player,items)){
                 balanceAccount.subtractMoney(removeMoneyCount);
                 player.getInventory().addItem(convertTo);
-                SimpleUtil.replacePlaceholders("{MONEY_TYPE}",messagesConfig.getConverted_to_real(),itemMoneyType.name()).forEach(player::sendMessage);
+                SimpleUtil.sendMessage(player,messagesConfig.getConverted_to_real(),"{MONEY_TYPE}",itemMoneyType.name());
             }
             return;
         }
@@ -110,7 +110,7 @@ public class EconomyManager {
         if(SimpleUtil.canFitInInventory(player,items)){
             balanceAccount.subtractMoney(removeMoneyCount);
             items.forEach(itemStack -> player.getInventory().addItem(itemStack));
-            SimpleUtil.replacePlaceholders("{MONEY_TYPE}",messagesConfig.getConverted_to_real(),itemMoneyType.name()).forEach(player::sendMessage);
+            SimpleUtil.sendMessage(player,messagesConfig.getConverted_to_real(),"{MONEY_TYPE}",itemMoneyType.name());
         }
     }
     public int convertToVirtual(ItemMoneyType itemMoneyType, int itemMoneyAmount, UUID uuid) {
