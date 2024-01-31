@@ -2,10 +2,10 @@ package me.galtap.fudzieconomy.command.subcommand.impl;
 
 import me.galtap.fudzieconomy.command.subcommand.ConsoleSubCommand;
 import me.galtap.fudzieconomy.command.subcommand.SubCommandType;
-import me.galtap.fudzieconomy.config.ConfigManager;
+import me.galtap.fudzieconomy.config.EconomyConfigManager;
 import me.galtap.fudzieconomy.config.MessagesConfig;
 import me.galtap.fudzieconomy.core.EconomyManager;
-import me.galtap.fudzieconomy.model.BalanceAccount;
+import me.galtap.fudzieconomy.core.BalanceAccount;
 import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -15,15 +15,15 @@ import org.jetbrains.annotations.NotNull;
 
 public class BalanceInfoSubCommand implements ConsoleSubCommand {
     private final EconomyManager economyManager;
-    private final ConfigManager configManager;
-    public BalanceInfoSubCommand(EconomyManager economyManager, ConfigManager configManager){
+    private final EconomyConfigManager economyConfigManager;
+    public BalanceInfoSubCommand(EconomyManager economyManager, EconomyConfigManager economyConfigManager){
 
         this.economyManager = economyManager;
-        this.configManager = configManager;
+        this.economyConfigManager = economyConfigManager;
     }
     @Override
     public void perform(@NotNull CommandSender sender, @NotNull String[] args) {
-        MessagesConfig messagesConfig = configManager.getMessagesConfig();
+        MessagesConfig messagesConfig = economyConfigManager.getMessagesConfig();
         if(args.length == 2){
             if(SimpleUtil.notHasPermission(sender,"fudzieco.info",messagesConfig)) return;
             Player player = Bukkit.getPlayer(args[1]);

@@ -2,11 +2,12 @@ package me.galtap.fudzieconomy.command.subcommand.impl;
 
 import me.galtap.fudzieconomy.command.subcommand.PlayerSubCommand;
 import me.galtap.fudzieconomy.command.subcommand.SubCommandType;
-import me.galtap.fudzieconomy.config.ConfigManager;
+import me.galtap.fudzieconomy.config.EconomyConfigManager;
 import me.galtap.fudzieconomy.config.MessagesConfig;
 import me.galtap.fudzieconomy.config.StandardConfig;
 import me.galtap.fudzieconomy.core.EconomyManager;
-import me.galtap.fudzieconomy.model.BalanceAccount;
+import me.galtap.fudzieconomy.core.BalanceAccount;
+import me.galtap.fudzieconomy.event.BalanceChangedEvent;
 import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -14,16 +15,16 @@ import org.jetbrains.annotations.NotNull;
 
 public class PayMoneySubCommand implements PlayerSubCommand {
     private final EconomyManager economyManager;
-    private final ConfigManager configManager;
+    private final EconomyConfigManager economyConfigManager;
 
-    public PayMoneySubCommand(EconomyManager economyManager, ConfigManager configManager){
+    public PayMoneySubCommand(EconomyManager economyManager, EconomyConfigManager economyConfigManager){
 
         this.economyManager = economyManager;
-        this.configManager = configManager;
+        this.economyConfigManager = economyConfigManager;
     }
     @Override
     public void perform(@NotNull Player player, @NotNull String[] args) {
-        MessagesConfig messagesConfig = configManager.getMessagesConfig();
+        MessagesConfig messagesConfig = economyConfigManager.getMessagesConfig();
         if(args.length != 5){
             messagesConfig.getError_arguments().forEach(player::sendMessage);
             return;
@@ -47,7 +48,7 @@ public class PayMoneySubCommand implements PlayerSubCommand {
         Integer count = SimpleUtil.parseInt(args[4],messagesConfig,player);
         if(count == null) return;
 
-        StandardConfig standardConfig = configManager.getStandardConfig();
+        StandardConfig standardConfig = economyConfigManager.getStandardConfig();
         if(count > standardConfig.getMaxPay() || count < standardConfig.getMinPay()){
             SimpleUtil.sendMessage(player,messagesConfig.getMoney_pay_limit());
             return;
@@ -58,7 +59,9 @@ public class PayMoneySubCommand implements PlayerSubCommand {
         }
         yourAccount.subtractMoney(count);
         targetAccount.addMoney(count);
+
         SimpleUtil.sendMessage(player,messagesConfig.getMoney_pay());
+        Bukkit.getPluginManager().callEvent(new BalanceChangedEvent(targetAccount));
     }
 
     @Override

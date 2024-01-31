@@ -1,4 +1,4 @@
-package me.galtap.fudzieconomy.model;
+package me.galtap.fudzieconomy.money;
 
 public enum ItemMoneyType {
     BRONZE,

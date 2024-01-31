@@ -4,10 +4,10 @@ import me.galtap.fudzieconomy.command.subcommand.SubCommand;
 import me.galtap.fudzieconomy.command.subcommand.impl.MoneyConclusionSubCommand;
 import me.galtap.fudzieconomy.command.subcommand.impl.MoneyTranslationSubCommand;
 import me.galtap.fudzieconomy.command.subcommand.impl.PayMoneySubCommand;
-import me.galtap.fudzieconomy.config.ConfigManager;
+import me.galtap.fudzieconomy.config.EconomyConfigManager;
 import me.galtap.fudzieconomy.config.MessagesConfig;
 import me.galtap.fudzieconomy.core.EconomyManager;
-import me.galtap.fudzieconomy.model.BalanceAccount;
+import me.galtap.fudzieconomy.core.BalanceAccount;
 import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
@@ -20,22 +20,22 @@ import java.util.Map;
 
 public class FudziMoneyCMD extends AbstractCommand{
     private final EconomyManager economyManager;
-    private final ConfigManager configManager;
+    private final EconomyConfigManager economyConfigManager;
     private final Map<String, SubCommand> subCommands = new HashMap<>();
 
-    public FudziMoneyCMD(String command, JavaPlugin plugin, EconomyManager economyManager, ConfigManager configManager) {
+    public FudziMoneyCMD(String command, JavaPlugin plugin, EconomyManager economyManager, EconomyConfigManager economyConfigManager) {
         super(command, plugin);
         this.economyManager = economyManager;
-        this.configManager = configManager;
+        this.economyConfigManager = economyConfigManager;
 
-        registerCommand(new PayMoneySubCommand(economyManager,configManager));
-        registerCommand(new MoneyConclusionSubCommand(economyManager,configManager));
-        registerCommand(new MoneyTranslationSubCommand(economyManager,configManager));
+        registerCommand(new PayMoneySubCommand(economyManager, economyConfigManager));
+        registerCommand(new MoneyConclusionSubCommand(economyManager, economyConfigManager));
+        registerCommand(new MoneyTranslationSubCommand(economyManager, economyConfigManager));
     }
 
     @Override
     public void execute(CommandSender sender, String label, String[] args) {
-        MessagesConfig messagesConfig = configManager.getMessagesConfig();
+        MessagesConfig messagesConfig = economyConfigManager.getMessagesConfig();
         if(args.length == 0){
             if(sender instanceof Player){
                 Player player = (Player) sender;

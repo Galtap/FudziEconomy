@@ -3,7 +3,7 @@ package me.galtap.fudzieconomy.config;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import me.galtap.fudzieconomy.FudziEconomy;
-import me.galtap.fudzieconomy.model.BalanceAccount;
+import me.galtap.fudzieconomy.core.BalanceAccount;
 import me.galtap.fudzieconomy.utill.CustomFile;
 import me.galtap.fudzieconomy.utill.Debug;
 import me.galtap.fudzieconomy.utill.SimpleUtil;

@@ -3,7 +3,7 @@ package me.galtap.fudzieconomy.config;
 import me.galtap.fudzieconomy.FudziEconomy;
 import me.galtap.fudzieconomy.utill.DefaultConfig;
 
-public class ConfigManager {
+public class EconomyConfigManager {
     private final FudziEconomy plugin;
     private final DefaultConfig messageFile;
 
@@ -11,7 +11,7 @@ public class ConfigManager {
     private StandardConfig standardConfig;
     private MessagesConfig messagesConfig;
 
-    public ConfigManager(FudziEconomy plugin){
+    public EconomyConfigManager(FudziEconomy plugin){
         this.plugin = plugin;
 
         plugin.saveDefaultConfig();

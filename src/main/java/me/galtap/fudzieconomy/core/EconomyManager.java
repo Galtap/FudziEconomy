@@ -2,11 +2,10 @@ package me.galtap.fudzieconomy.core;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import me.galtap.fudzieconomy.config.ConfigManager;
+import me.galtap.fudzieconomy.config.EconomyConfigManager;
 import me.galtap.fudzieconomy.config.MessagesConfig;
-import me.galtap.fudzieconomy.model.BalanceAccount;
-import me.galtap.fudzieconomy.model.ItemMoney;
-import me.galtap.fudzieconomy.model.ItemMoneyType;
+import me.galtap.fudzieconomy.money.ItemMoney;
+import me.galtap.fudzieconomy.money.ItemMoneyType;
 import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,10 +15,10 @@ import java.util.*;
 
 public class EconomyManager {
     private final Multimap<UUID, BalanceAccount> playerAccounts = ArrayListMultimap.create();
-    private final ConfigManager configManager;
+    private final EconomyConfigManager economyConfigManager;
 
-    public EconomyManager(ConfigManager configManager) {
-        this.configManager = configManager;
+    public EconomyManager(EconomyConfigManager economyConfigManager) {
+        this.economyConfigManager = economyConfigManager;
         reloadModule();
     }
 
@@ -29,7 +28,7 @@ public class EconomyManager {
     }
 
     public void saveData() {
-        configManager.getDataConfig().saveData(playerAccounts);
+        economyConfigManager.getDataConfig().saveData(playerAccounts);
     }
 
     public void createBalanceAccount(UUID target, String accountName, int startBalance) {
@@ -60,13 +59,13 @@ public class EconomyManager {
     }
 
     public void convertToItemMoney(ItemMoneyType itemMoneyType, int itemAmount, BalanceAccount balanceAccount, Player player){
-        MessagesConfig messagesConfig = configManager.getMessagesConfig();
+        MessagesConfig messagesConfig = economyConfigManager.getMessagesConfig();
         if(validateArguments(itemMoneyType,balanceAccount) || itemAmount < 1){
             SimpleUtil.sendMessage(player,messagesConfig.getError_arguments());
             return;
         }
 
-        ItemMoney itemMoney = configManager.getStandardConfig().getItemMoney(itemMoneyType);
+        ItemMoney itemMoney = economyConfigManager.getStandardConfig().getItemMoney(itemMoneyType);
         if(itemMoney == null){
             SimpleUtil.sendMessage(player,messagesConfig.getError_arguments());
             return;
@@ -119,7 +118,7 @@ public class EconomyManager {
         }
 
         Player player = Bukkit.getPlayer(uuid);
-        ItemMoney itemMoney = configManager.getStandardConfig().getItemMoney(itemMoneyType);
+        ItemMoney itemMoney = economyConfigManager.getStandardConfig().getItemMoney(itemMoneyType);
 
         if (itemMoney == null || player == null) {
             return 0;
@@ -169,7 +168,7 @@ public class EconomyManager {
     }
 
     private void loadPlayerAccounts() {
-        playerAccounts.putAll(configManager.getDataConfig().loadData());
+        playerAccounts.putAll(economyConfigManager.getDataConfig().loadData());
     }
 
     private void clearMaps() {

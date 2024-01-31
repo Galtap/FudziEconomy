@@ -2,11 +2,11 @@ package me.galtap.fudzieconomy.command.subcommand.impl;
 
 import me.galtap.fudzieconomy.command.subcommand.PlayerSubCommand;
 import me.galtap.fudzieconomy.command.subcommand.SubCommandType;
-import me.galtap.fudzieconomy.config.ConfigManager;
+import me.galtap.fudzieconomy.config.EconomyConfigManager;
 import me.galtap.fudzieconomy.config.MessagesConfig;
 import me.galtap.fudzieconomy.core.EconomyManager;
-import me.galtap.fudzieconomy.model.BalanceAccount;
-import me.galtap.fudzieconomy.model.ItemMoneyType;
+import me.galtap.fudzieconomy.core.BalanceAccount;
+import me.galtap.fudzieconomy.money.ItemMoneyType;
 import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
@@ -15,16 +15,16 @@ import java.util.Locale;
 
 public class MoneyTranslationSubCommand implements PlayerSubCommand {
     private final EconomyManager economyManager;
-    private final ConfigManager configManager;
+    private final EconomyConfigManager economyConfigManager;
 
-    public MoneyTranslationSubCommand(EconomyManager economyManager, ConfigManager configManager){
+    public MoneyTranslationSubCommand(EconomyManager economyManager, EconomyConfigManager economyConfigManager){
 
         this.economyManager = economyManager;
-        this.configManager = configManager;
+        this.economyConfigManager = economyConfigManager;
     }
     @Override
     public void perform(@NotNull Player player, @NotNull String[] args) {
-        MessagesConfig messagesConfig = configManager.getMessagesConfig();
+        MessagesConfig messagesConfig = economyConfigManager.getMessagesConfig();
         if(args.length != 4){
             SimpleUtil.sendMessage(player,messagesConfig.getError_arguments());
             return;

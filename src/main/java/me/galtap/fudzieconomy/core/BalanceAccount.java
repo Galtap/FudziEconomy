@@ -1,4 +1,4 @@
-package me.galtap.fudzieconomy.model;
+package me.galtap.fudzieconomy.core;
 
 import java.util.Objects;
 import java.util.UUID;

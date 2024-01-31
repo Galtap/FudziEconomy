@@ -2,29 +2,31 @@ package me.galtap.fudzieconomy.command.subcommand.impl;
 
 import me.galtap.fudzieconomy.command.subcommand.ConsoleSubCommand;
 import me.galtap.fudzieconomy.command.subcommand.SubCommandType;
-import me.galtap.fudzieconomy.config.ConfigManager;
+import me.galtap.fudzieconomy.config.EconomyConfigManager;
 import me.galtap.fudzieconomy.config.MessagesConfig;
+import me.galtap.fudzieconomy.core.BalanceAccount;
 import me.galtap.fudzieconomy.core.EconomyManager;
+import me.galtap.fudzieconomy.event.BalanceDeletedEvent;
 import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class EconomyBalanceSubCommand implements ConsoleSubCommand {
     private final EconomyManager economyManager;
-    private final ConfigManager configManager;
+    private final EconomyConfigManager economyConfigManager;
 
-    public EconomyBalanceSubCommand(EconomyManager economyManager, ConfigManager configManager) {
+    public EconomyBalanceSubCommand(EconomyManager economyManager, EconomyConfigManager economyConfigManager) {
         this.economyManager = Objects.requireNonNull(economyManager, "economyManager must not be null");
-        this.configManager = Objects.requireNonNull(configManager, "configManager must not be null");
+        this.economyConfigManager = Objects.requireNonNull(economyConfigManager, "configManager must not be null");
     }
 
     @Override
     public void perform(@NotNull CommandSender sender, @NotNull String[] args) {
-        MessagesConfig messagesConfig = configManager.getMessagesConfig();
+        MessagesConfig messagesConfig = economyConfigManager.getMessagesConfig();
 
         if (args.length == 4) {
             if ("create".equalsIgnoreCase(args[1])) {
@@ -50,9 +52,9 @@ public class EconomyBalanceSubCommand implements ConsoleSubCommand {
     }
 
     private void createBalance(String playerName, CommandSender sender, MessagesConfig messagesConfig, String accountName, int startBalance) {
-        Player player = Bukkit.getPlayer(playerName);
+        OfflinePlayer player = Bukkit.getPlayer(playerName);
         if (player == null) {
-            SimpleUtil.sendMessage(sender,messagesConfig.getPlayer_not_online());
+            SimpleUtil.sendMessage(sender,messagesConfig.getPlayer_not_exists());
             return;
         }
         if (economyManager.balanceAccountExists(player.getUniqueId(), accountName)) {
@@ -64,15 +66,17 @@ public class EconomyBalanceSubCommand implements ConsoleSubCommand {
     }
 
     private void deleteBalance(String playerName, CommandSender sender, MessagesConfig messagesConfig, String accountName) {
-        Player player = Bukkit.getPlayer(playerName);
+        OfflinePlayer player = Bukkit.getPlayer(playerName);
         if (player == null) {
-            SimpleUtil.sendMessage(sender,messagesConfig.getPlayer_not_online());
+            SimpleUtil.sendMessage(sender,messagesConfig.getPlayer_not_exists());
             return;
         }
-        if (!economyManager.balanceAccountExists(player.getUniqueId(), accountName)) {
+        BalanceAccount balanceAccount = economyManager.getBalanceAccount(player.getUniqueId(),accountName);
+        if (balanceAccount == null) {
             SimpleUtil.sendMessage(sender,messagesConfig.getBalance_not_exists(),"{ACCOUNT_NAME}",accountName);
             return;
         }
+        Bukkit.getPluginManager().callEvent(new BalanceDeletedEvent(sender,balanceAccount));
         economyManager.removeBalanceAccount(player.getUniqueId(), accountName);
         SimpleUtil.sendMessage(sender,messagesConfig.getBalance_deleted());
     }

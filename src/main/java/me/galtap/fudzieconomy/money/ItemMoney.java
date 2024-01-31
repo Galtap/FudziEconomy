@@ -1,4 +1,4 @@
-package me.galtap.fudzieconomy.model;
+package me.galtap.fudzieconomy.money;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Objects;

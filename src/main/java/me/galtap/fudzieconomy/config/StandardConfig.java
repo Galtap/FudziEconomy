@@ -1,7 +1,7 @@
 package me.galtap.fudzieconomy.config;
 
-import me.galtap.fudzieconomy.model.ItemMoney;
-import me.galtap.fudzieconomy.model.ItemMoneyType;
+import me.galtap.fudzieconomy.money.ItemMoney;
+import me.galtap.fudzieconomy.money.ItemMoneyType;
 import me.galtap.fudzieconomy.utill.Debug;
 import me.galtap.fudzieconomy.utill.ErrorHandler;
 import me.galtap.fudzieconomy.utill.ItemBuilder;

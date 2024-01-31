@@ -31,6 +31,7 @@ public class MessagesConfig {
     private final List<String> converted_to_virtual = new ArrayList<>();
     private final List<String> converting_to_real_error = new ArrayList<>();
     private final List<String> converted_to_real = new ArrayList<>();
+    private final List<String> player_not_exists = new ArrayList<>();
 
 
     public MessagesConfig(DefaultConfig config){
@@ -57,6 +58,7 @@ public class MessagesConfig {
         balance_deleted.addAll(getMessage(section,"balance_deleted",ADMIN_MESSAGES_KEY));
         money_removed.addAll(getMessage(section,"money_removed",ADMIN_MESSAGES_KEY));
         money_set.addAll(getMessage(section,"money_set",ADMIN_MESSAGES_KEY));
+        player_not_exists.addAll(getMessage(section,"player_not_exists",ADMIN_MESSAGES_KEY));
     }
     private static List<String> getMessage(ConfigurationSection section, String path,String key){
         String newPath;
@@ -149,5 +151,9 @@ public class MessagesConfig {
 
     public List<String> getConverted_to_real() {
         return converted_to_real;
+    }
+
+    public List<String> getPlayer_not_exists() {
+        return player_not_exists;
     }
 }
