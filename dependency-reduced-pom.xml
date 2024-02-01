@@ -25,7 +25,7 @@
         <artifactId>maven-jar-plugin</artifactId>
         <version>3.3.0</version>
         <configuration>
-          <finalName>FudziEconmy-bukkit-1.0.0-beta</finalName>
+          <finalName>FudziEconmy-bukkit-1.0.1-beta</finalName>
           <outputDirectory>C:\Users\123al\OneDrive\Рабочий стол\локальные сервера\сервер 1.12.2\plugins</outputDirectory>
         </configuration>
       </plugin>

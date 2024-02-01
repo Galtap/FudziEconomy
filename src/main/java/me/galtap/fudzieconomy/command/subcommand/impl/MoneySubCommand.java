@@ -6,7 +6,7 @@ import me.galtap.fudzieconomy.config.EconomyConfigManager;
 import me.galtap.fudzieconomy.config.MessagesConfig;
 import me.galtap.fudzieconomy.core.BalanceAccount;
 import me.galtap.fudzieconomy.core.EconomyManager;
-import me.galtap.fudzieconomy.event.BalanceChangedEvent;
+import me.galtap.fudzieconomy.event.BalanceMoneyChangedEvent;
 import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -62,17 +62,17 @@ public class MoneySubCommand implements ConsoleSubCommand {
             case "give":
                 balanceAccount.addMoney(count);
                 SimpleUtil.sendMessage(sender,messagesConfig.getMoney_pay());
-                Bukkit.getPluginManager().callEvent(new BalanceChangedEvent(balanceAccount));
+                Bukkit.getPluginManager().callEvent(new BalanceMoneyChangedEvent(balanceAccount));
                 break;
             case "remove":
                 balanceAccount.subtractMoney(count);
                 SimpleUtil.sendMessage(sender,messagesConfig.getMoney_removed());
-                Bukkit.getPluginManager().callEvent(new BalanceChangedEvent(balanceAccount));
+                Bukkit.getPluginManager().callEvent(new BalanceMoneyChangedEvent(balanceAccount));
                 break;
             case "set":
                 balanceAccount.setMoney(count);
                 SimpleUtil.sendMessage(sender,messagesConfig.getMoney_set());
-                Bukkit.getPluginManager().callEvent(new BalanceChangedEvent(balanceAccount));
+                Bukkit.getPluginManager().callEvent(new BalanceMoneyChangedEvent(balanceAccount));
                 break;
             default:
                 SimpleUtil.sendMessage(sender,messagesConfig.getError_arguments());

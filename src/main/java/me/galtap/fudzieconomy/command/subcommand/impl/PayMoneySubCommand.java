@@ -7,7 +7,7 @@ import me.galtap.fudzieconomy.config.MessagesConfig;
 import me.galtap.fudzieconomy.config.StandardConfig;
 import me.galtap.fudzieconomy.core.EconomyManager;
 import me.galtap.fudzieconomy.core.BalanceAccount;
-import me.galtap.fudzieconomy.event.BalanceChangedEvent;
+import me.galtap.fudzieconomy.event.BalanceMoneyChangedEvent;
 import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -61,7 +61,7 @@ public class PayMoneySubCommand implements PlayerSubCommand {
         targetAccount.addMoney(count);
 
         SimpleUtil.sendMessage(player,messagesConfig.getMoney_pay());
-        Bukkit.getPluginManager().callEvent(new BalanceChangedEvent(targetAccount));
+        Bukkit.getPluginManager().callEvent(new BalanceMoneyChangedEvent(targetAccount));
     }
 
     @Override

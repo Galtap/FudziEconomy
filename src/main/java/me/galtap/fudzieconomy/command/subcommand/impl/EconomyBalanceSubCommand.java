@@ -6,6 +6,7 @@ import me.galtap.fudzieconomy.config.EconomyConfigManager;
 import me.galtap.fudzieconomy.config.MessagesConfig;
 import me.galtap.fudzieconomy.core.BalanceAccount;
 import me.galtap.fudzieconomy.core.EconomyManager;
+import me.galtap.fudzieconomy.event.BalanceCreatedEvent;
 import me.galtap.fudzieconomy.event.BalanceDeletedEvent;
 import me.galtap.fudzieconomy.utill.SimpleUtil;
 import org.bukkit.Bukkit;
@@ -63,6 +64,7 @@ public class EconomyBalanceSubCommand implements ConsoleSubCommand {
         }
         economyManager.createBalanceAccount(player.getUniqueId(), accountName, startBalance);
         SimpleUtil.sendMessage(sender,messagesConfig.getBalance_created(),"{BALANCE}",String.valueOf(startBalance));
+        Bukkit.getPluginManager().callEvent(new BalanceCreatedEvent(accountName,startBalance,player));
     }
 
     private void deleteBalance(String playerName, CommandSender sender, MessagesConfig messagesConfig, String accountName) {

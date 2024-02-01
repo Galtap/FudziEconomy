@@ -26,7 +26,7 @@ public class PluginListener implements Listener {
         String firstBalanceName = standardConfig.getFirstBalanceName();
         BalanceAccount balanceAccount = economyManager.getBalanceAccount(player.getUniqueId(),firstBalanceName.replace("{PLAYER_NAME}",player.getName()));
         if(balanceAccount == null){
-            economyManager.createBalanceAccount(player.getUniqueId(),firstBalanceName, economyConfigManager.getStandardConfig().getStartBalance());
+            economyManager.createBalanceAccount(player.getUniqueId(),firstBalanceName.replace("{PLAYER_NAME}",player.getName()), economyConfigManager.getStandardConfig().getStartBalance());
         }
     }
 }

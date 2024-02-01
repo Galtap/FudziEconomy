@@ -4,10 +4,10 @@ import me.galtap.fudzieconomy.core.BalanceAccount;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
-public class BalanceChangedEvent extends Event {
+public class BalanceMoneyChangedEvent extends Event {
     private final BalanceAccount balanceAccount;
 
-    public BalanceChangedEvent(BalanceAccount balanceAccount){
+    public BalanceMoneyChangedEvent(BalanceAccount balanceAccount){
 
         this.balanceAccount = balanceAccount;
     }
